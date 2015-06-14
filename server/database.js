@@ -185,3 +185,63 @@ exports.addCategorie = function(catName, callback) {
 		});
 	});
 }
+
+exports.categorieDetail = function(catId, callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("SELECT name FROM categorie", function(err, res) {
+			if(err) {
+				connection.release();
+				return callback(err);
+			}
+
+			var resp = {
+				cat_name: res[0].name
+			}
+
+			connection.query("SELECT id, name, icon, prix, produitType AS type FROM produit WHERE categorie = ?", [catId], function(err, res) {
+				if(err) {
+					connection.release();
+					return callback(err);
+				}
+
+				resp.produits = res;
+				connection.release();
+				callback(null, resp);
+			});
+		});
+	});
+}
+
+exports.pushArticle = function(article, callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		console.log(article);
+
+		connection.query("UPDATE produit SET name=?, prix=?, produitType=? WHERE id=?", [article.name, article.prix, article.type, article.id], function(err) {
+			connection.release();
+			callback(err);
+		});
+	});
+}
+
+exports.newArticle = function(article, callback) {
+	console.log(article);
+
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("INSERT INTO produit(name, categorie, prix, produitType) VALUE(?, ?, ?, ?)", [article.name, article.categorie, article.prix, article.type], function(err) {
+			connection.release();
+			callback(err);
+		});
+	});
+}

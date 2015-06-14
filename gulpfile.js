@@ -5,7 +5,7 @@ var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 
 gulp.task('scripts', function(){
-	return gulp.src(['./client/js/app.js', './client/js/caisse.js', './client/js/admin_panel_gerer_caisse.js'])
+	return gulp.src(['./client/js/app.js', './client/js/caisse.js', './client/js/admin_panel_gerer_caisse.js', './client/js/admin_panel_gerer_categorie.js'])
 		.pipe(plumber())
 		.pipe(concat('caisse.js'))
 		//.pipe(uglify())

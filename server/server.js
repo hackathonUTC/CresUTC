@@ -42,6 +42,9 @@ app.get('/caisse/load/', caisse.checkToken, caisse.initCaisse);
 app.post('/caisse/vente/', caisse.checkToken, caisse.vente);
 app.get('/caisse/categorie/', caisse.checkToken, caisse.loadCategorie);
 app.post('/caisse/ajouterCategorie/', caisse.checkToken, caisse.ajouterCategorie);
+app.get('/caisse/categorieDetail/', caisse.checkToken, caisse.categorieDetail);
+app.post('/caisse/pushArticle', caisse.checkToken, caisse.pushArticle);
+app.post('/caisse/newArticle', caisse.checkToken, caisse.newArticle);
 app.use('*', function(req, res){
 	res.status(404).send("Not found :(");
 });

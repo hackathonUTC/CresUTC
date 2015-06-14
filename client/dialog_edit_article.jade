@@ -1,0 +1,15 @@
+div.modal-header
+	h3.modal-title Editer un article
+div.modal-body
+	p Nom :
+		input(type='text' ng-model='p.name')
+	p Prix :
+		input(type='number' ng-model='p.prix')
+	p Icon: (à faire)
+	p Type :
+		select(ng-model="p.type")
+			option(value='objet') Objet
+			option(value='service') Service
+div.modal-footer
+	button.btn.btn-success(ng-click="ok()") Enregistrer
+	button.btn.btn-danger(ng-click="cancel()") Annuler

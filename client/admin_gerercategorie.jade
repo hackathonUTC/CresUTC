@@ -1,0 +1,15 @@
+extends ./layouts/adminpanel.layout
+
+block content
+	h1 Gestion de {{cat_name}}
+
+	button.btn.btn-primary(ng-click='ajouterArticle()') Ajouter un article
+	table.table.table-striped
+		tr(ng-repeat="p in produits")
+			td
+				button.btn.btn-link(ng-click="editerArticle(p)") {{p.name}}
+			td
+				b {{p.prix}} €
+			td {{p.type}}
+			td
+				button.btn.btn-danger(ng-click='supprimerProduit(p)') Supprimer

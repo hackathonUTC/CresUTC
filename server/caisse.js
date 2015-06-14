@@ -76,9 +76,49 @@ exports.loadCategorie = function(req, res) {
 exports.ajouterCategorie = function(req, res) {
 	database.addCategorie(req.body.catName, function(err) {
 		if(err){
-			res.status(500).send("Error")
+			return res.status(500).send("Error")
 		}
 
 		res.status(200).send("ok");
 	})
+}
+
+exports.categorieDetail = function(req, res) {
+
+	if(!req.query.id)
+		return res.status(400).send("Bad request");
+
+	database.categorieDetail(req.query.id, function(err, data) {
+		if(err){
+			return res.status(500).send(err);
+		}
+
+		res.json(data);
+	})
+}
+
+exports.pushArticle = function(req, res) {
+	if(!req.body)
+		return res.status(400).send("Bad request");
+
+	database.pushArticle(req.body, function(err) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.status(200).send("ok");
+	});
+}
+
+exports.newArticle = function(req, res) {
+	if(!req.body)
+		return res.status(400).send("Bad request");
+
+	database.newArticle(req.body, function(err) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.status(200).send("ok");
+	});
 }
