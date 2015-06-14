@@ -134,6 +134,8 @@ app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', 
 			.error(function(data, status, headers, config) {
 
 			});
+
+			$scope.ticket = [];
 		})
 	}
 }]);
