@@ -122,3 +122,16 @@ exports.newArticle = function(req, res) {
 		res.status(200).send("ok");
 	});
 }
+
+exports.deleteArticle = function(req, res) {
+	if(!req.body.id)
+		return res.status(400).send("Bad request");
+
+	database.deleteArticle(req.body.id, function(err) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.status(200).send("ok");
+	});
+}

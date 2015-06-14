@@ -245,3 +245,16 @@ exports.newArticle = function(article, callback) {
 		});
 	});
 }
+
+exports.deleteArticle = function(article_id, callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("DELETE FROM produit WHERE id=?", [article_id], function(err) {
+			connection.release();
+			callback(err);
+		});
+	});
+}

@@ -45,6 +45,7 @@ app.post('/caisse/ajouterCategorie/', caisse.checkToken, caisse.ajouterCategorie
 app.get('/caisse/categorieDetail/', caisse.checkToken, caisse.categorieDetail);
 app.post('/caisse/pushArticle', caisse.checkToken, caisse.pushArticle);
 app.post('/caisse/newArticle', caisse.checkToken, caisse.newArticle);
+app.post('/caisse/deleteArticle', caisse.checkToken, caisse.deleteArticle);
 app.use('*', function(req, res){
 	res.status(404).send("Not found :(");
 });

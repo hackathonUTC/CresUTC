@@ -76,6 +76,16 @@ app.controller('adminpanel_gerer_categorie', ['$scope', '$http', '$routeParams',
 			});
 		})
 	}
+
+	$scope.supprimerProduit = function(p) {
+		$http.post('/caisse/deleteArticle', {id: p.id})
+		.success(function(data, status, headers, config) {
+			loadCategorie();
+		})
+		.error(function(data, status, headers, config) {
+			loadCategorie();
+		});
+	};
 }]);
 
 app.controller('dialog_edit_article', ['$scope', 'p', '$modalInstance', '$http', function($scope, p, $modalInstance, $http) {
