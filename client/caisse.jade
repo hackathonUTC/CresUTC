@@ -29,7 +29,7 @@ div.container-fluid
 			div.row(ng-if="isAdmin")
 				a.btn.btn-success.btn-block.btnSpacer.btn-lg(href='#/adminpanel/') Panneau d'administration
 			div.row
-				button.btn.btn-primary.btn-block.btnSpacer.btn-lg(ng-click="logout") Deconnexion
+				a.btn.btn-default.btn-block.btnSpacer.btn-lg(ng-click="logout()" href="/logout") Deconnexion
 		div.col-md-1
 			div.row
 				div.btn-group.btn-group-vertical

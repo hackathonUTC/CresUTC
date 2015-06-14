@@ -1,4 +1,4 @@
-app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', function($scope, $http, $modal, jwtHelper, $cookies) {
+app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', '$location', function($scope, $http, $modal, jwtHelper, $cookies, $location) {
 	$scope.categorie = [];
 
 	$scope.ticket = [];
@@ -108,6 +108,10 @@ app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', 
 	$scope.venteCheque = function() {
 		openModal('/dialog_cheque.html', 'cheque');
 	};
+
+	$scope.logout = function() {
+		$cookies.remove('token');
+	}
 
 	function openModal(template, moyenPaiement) {
 		var modalInstance = $modal.open({

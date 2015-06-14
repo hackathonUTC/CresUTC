@@ -37,6 +37,7 @@ app.use(cookieParser());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, './../public')));
+app.get('/logout/', cas.logout);
 app.get('/', cas.bounce, caisse.loadCaisse);
 app.get('/caisse/load/', caisse.checkToken, caisse.initCaisse);
 app.post('/caisse/vente/', caisse.checkToken, caisse.vente);
