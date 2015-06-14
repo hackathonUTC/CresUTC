@@ -1,0 +1,8 @@
+div.modal-header
+	h3.modal-title Vente par chèque
+div.modal-body
+	p A payer : {{prix}} €
+	p Ranger le chèque et valider la vente.
+div.modal-footer
+	button.btn.btn-success(ng-click="ok()") Enregistrer la vente
+	button.btn.btn-danger(ng-click="cancel()") Annuler

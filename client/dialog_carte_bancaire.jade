@@ -1,0 +1,8 @@
+div.modal-header
+	h3.modal-title Vente par carte bancaire
+div.modal-body
+	p A payer : {{prix}} €
+	p Rentrer le montant sur le terminal de paiement et valider.
+div.modal-footer
+	button.btn.btn-success(ng-click="ok()") Enregistrer la vente
+	button.btn.btn-danger(ng-click="cancel()") Annuler

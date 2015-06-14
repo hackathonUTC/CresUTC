@@ -1,0 +1,9 @@
+extends ./layouts/adminpanel.layout
+
+block content
+	h1 Gestion des articles
+	button.btn.btn-primary(ng-click='ajouterCategorie()') Ajouter une catégorie
+	table.table.table-striped
+		tr(ng-repeat="cat in categorie")
+			td
+				a(href="/#/adminpanel/editCat/{{cat.id}}") {{cat.name}}

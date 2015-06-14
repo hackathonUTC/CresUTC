@@ -1,0 +1,9 @@
+div.modal-header
+	h3.modal-title Prix personnalisé pour "{{produit}}"
+div.modal-body
+	p Prix : 
+		input(type="text" ng-model="prix")
+		span €
+div.modal-footer
+	button.btn.btn-success(ng-click="ok()") Enregistrer
+	button.btn.btn-danger(ng-click="cancel()") Annuler

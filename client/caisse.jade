@@ -1,0 +1,37 @@
+div.container-fluid
+	div.row
+		div.col-md-3
+			div.row.well
+				table.table.table-striped
+					tr
+						td Produit
+						td Quantité
+						td Prix
+						td Action
+					tr(ng-repeat='t in ticket')
+						td {{t.produit}}
+						td {{t.quantite}}
+						td
+							b {{t.prix}} €
+						td
+							btn.btn.btn-danger(ng-click="supprimerProduit(t)") Supprimer
+				h3 Prix total : {{prix()}} €
+				p
+					us-spinner
+			div.row
+				button.btn.btn-danger.btn-block.btnSpacer.btn-lg(ng-click="clearAllLines()") Effacer toutes les lignes
+			div.row
+				button.btn.btn-primary.btn-block.btnSpacer.btn-lg(ng-click="venteEspece()") Paiement espèce
+			div.row
+				button.btn.btn-primary.btn-block.btnSpacer.btn-lg(ng-click="venteCheque()") Paiement chèque
+			div.row
+				button.btn.btn-primary.btn-block.btnSpacer.btn-lg(ng-click="venteCB()") Paiement CB
+			div.row(ng-if="isAdmin")
+				a.btn.btn-success.btn-block.btnSpacer.btn-lg(href='#/adminpanel/') Panneau d'administration
+		div.col-md-1
+			div.row
+				div.btn-group.btn-group-vertical
+					label.btn.btn-default.btn-lg(ng-repeat='cat in categorie' ng-model="$parent.currentCategorie" btn-radio="{{$index}}" ng-click="switchOnglet($index)") {{cat.name}}
+		div.col-md-8
+			div.col-md-2(ng-repeat="p in products")
+				button.btn.btn-default.btn-lg.btn-block(style='margin-bottom: 10px; margin-top: 10px' ng-click="ajouterProduit(p)") {{p.name}}
