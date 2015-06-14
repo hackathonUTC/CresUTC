@@ -38,17 +38,19 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, './../public')));
 app.get('/logout/', cas.logout);
-app.get('/', cas.bounce, caisse.loadCaisse);
-app.get('/caisse/load/', caisse.checkToken, caisse.initCaisse);
-app.post('/caisse/vente/', caisse.checkToken, caisse.vente);
-app.get('/caisse/categorie/', caisse.checkToken, caisse.loadCategorie);
-app.post('/caisse/ajouterCategorie/', caisse.checkToken, caisse.ajouterCategorie);
-app.get('/caisse/categorieDetail/', caisse.checkToken, caisse.categorieDetail);
-app.post('/caisse/pushArticle', caisse.checkToken, caisse.pushArticle);
-app.post('/caisse/newArticle', caisse.checkToken, caisse.newArticle);
-app.post('/caisse/deleteArticle', caisse.checkToken, caisse.deleteArticle);
-app.get('/caisse/journaldesventes', caisse.checkToken, caisse.journalDesVentes);
-app.get('/caisse/detailVente', caisse.checkToken, caisse.detailVente);
+app.get('/', cas.bounce, caisse.checkRights, caisse.loadCaisse);
+app.get('/caisse/load/', caisse.checkToken, caisse.checkRights, caisse.initCaisse);
+app.post('/caisse/vente/', caisse.checkToken, caisse.checkRights, caisse.vente);
+app.get('/caisse/categorie/', caisse.checkToken, caisse.checkRights, caisse.loadCategorie);
+app.post('/caisse/ajouterCategorie/', caisse.checkToken, caisse.checkRights, caisse.ajouterCategorie);
+app.get('/caisse/categorieDetail/', caisse.checkToken, caisse.checkRights, caisse.categorieDetail);
+app.post('/caisse/pushArticle', caisse.checkToken, caisse.checkRights, caisse.pushArticle);
+app.post('/caisse/newArticle', caisse.checkToken, caisse.checkRights, caisse.newArticle);
+app.post('/caisse/deleteArticle', caisse.checkToken, caisse.checkRights, caisse.deleteArticle);
+app.get('/caisse/journaldesventes', caisse.checkToken, caisse.checkRights, caisse.journalDesVentes);
+app.get('/caisse/detailVente', caisse.checkToken, caisse.checkRights, caisse.detailVente);
+app.get('/caisse/allUsers', caisse.checkToken, caisse.checkRights, caisse.allUsers);
+app.post('/caisse/saveUser', caisse.checkToken, caisse.checkRights, caisse.saveUser);
 app.use('*', function(req, res){
 	res.status(404).send("Not found :(");
 });

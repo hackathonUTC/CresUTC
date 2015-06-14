@@ -16,6 +16,23 @@ exports.checkToken = function(req, res, next) {
 	next();
 }
 
+exports.checkRights = function(req, res, next) {
+	var cas_user = req.session.cas_user;
+
+	database.userRank(cas_user, function(error, rights) {
+	if(error){
+		return res.status("500").send("Database error");
+	}
+	
+	if(rights == "client")
+	{
+		return res.status(403).send("Ce n'est pas cette page là que vous recherchez...");
+	}
+
+	next();
+});
+}
+
 exports.loadCaisse = function(req, res) {
 
 	var cas_user = req.session.cas_user;
@@ -156,5 +173,28 @@ exports.detailVente = function(req, res) {
 		}
 
 		res.json(data);
+	});
+}
+
+exports.allUsers = function(req, res) {
+	database.allUsers(function(err, data) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.json(data);
+	})
+}
+
+exports.saveUser = function(req, res) {
+	if(!req.body.name)
+		return res.status(400).send("Bad request");
+
+	database.saveUser(req.body, function(err) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.status(200).send("ok");
 	});
 }

@@ -1,0 +1,13 @@
+extends ./layouts/adminpanel.layout
+
+block content
+	h1 Gestion des droits
+
+	table.table.table-striped
+		tr(ng-repeat="u in users")
+			td {{u.name}}
+			td
+				select(ng-model='u.rights' ng-change='sauverUser(u)')
+					option(value='client') Client
+					option(value='vendeur') Vendeur
+					option(value='admin') Administrateur

@@ -284,3 +284,29 @@ exports.detailVente = function(id, callback){
 		});
 	});
 }
+
+exports.allUsers = function(callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("SELECT cas_login AS name, rights FROM users", function(err, res) {
+			connection.release();
+			callback(err, res);
+		});
+	});
+}
+
+exports.saveUser = function(user, callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("UPDATE users SET rights=? WHERE cas_login=?", [user.rights, user.name], function(err, res) {
+			connection.release();
+			callback(err, res);
+		});
+	});
+}
