@@ -258,3 +258,29 @@ exports.deleteArticle = function(article_id, callback) {
 		});
 	});
 }
+
+exports.journalDesVentes = function(callback) {
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("SELECT id, DATE_FORMAT(date, '%d/%m/%Y %H:%i:%S') AS date, moyen_de_paiement, total FROM vente LIMIT 0,100", function(err, res) {
+			connection.release();
+			callback(err, res);
+		});
+	});
+}
+
+exports.detailVente = function(id, callback){
+	pool.getConnection(function(error, connection) {
+		if(error) {
+			return callback(error);
+		}
+
+		connection.query("SELECT name AS produit, quantite, prix_total AS prix FROM produit_vente WHERE id_vente = ?", [id], function(err, res) {
+			connection.release();
+			callback(err, res);
+		});
+	});
+}

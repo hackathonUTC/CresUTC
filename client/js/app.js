@@ -17,6 +17,10 @@ app.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'admin_gerercategorie.html',
 			controller: 'adminpanel_gerer_categorie'
 		})
+		.when('/adminpanel/journaldesventes', {
+			templateUrl: 'admin_journaldesventes.html',
+			controller: 'admin_journaldesventes'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});

@@ -135,3 +135,26 @@ exports.deleteArticle = function(req, res) {
 		res.status(200).send("ok");
 	});
 }
+
+exports.journalDesVentes = function(req, res) {
+	database.journalDesVentes(function(err, data) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.json(data);
+	})
+}
+
+exports.detailVente = function(req, res) {
+	if(!req.query.id)
+		return res.status(400).send("Bad request");
+
+	database.detailVente(req.query.id, function(err, data) {
+		if(err) {
+			return res.status(500).send(err);
+		}
+
+		res.json(data);
+	});
+}

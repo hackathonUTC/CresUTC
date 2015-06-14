@@ -1,0 +1,16 @@
+extends ./layouts/adminpanel.layout
+
+block content
+	h1 Journal des ventes
+	table.table.table-striped
+		tr
+			th Date
+			th Montant
+			th Moyen de paiement
+
+		tr(ng-repeat="vente in journal")
+			td
+				a(ng-click="voirDetail(vente)") {{vente.date}}
+			td
+				b {{vente.total}} €
+			td {{vente.moyen_de_paiement}}

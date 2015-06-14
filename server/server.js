@@ -47,6 +47,8 @@ app.get('/caisse/categorieDetail/', caisse.checkToken, caisse.categorieDetail);
 app.post('/caisse/pushArticle', caisse.checkToken, caisse.pushArticle);
 app.post('/caisse/newArticle', caisse.checkToken, caisse.newArticle);
 app.post('/caisse/deleteArticle', caisse.checkToken, caisse.deleteArticle);
+app.get('/caisse/journaldesventes', caisse.checkToken, caisse.journalDesVentes);
+app.get('/caisse/detailVente', caisse.checkToken, caisse.detailVente);
 app.use('*', function(req, res){
 	res.status(404).send("Not found :(");
 });

@@ -1,0 +1,17 @@
+div.modal-header
+	h3.modal-title Détail de la vente
+div.modal-body
+	table.table.table-striped
+		tr
+			th Produit
+			th Quantite
+			th Prix
+			th Prix unitaire
+		tr(ng-repeat='d in detail')
+			td {{d.produit}}
+			td {{d.quantite}}
+			td
+				b {{d.prix}} €
+			td {{d.prix / d.quantite}} €
+div.modal-footer
+	button.btn.btn-primary(ng-click="ok()") Fermer

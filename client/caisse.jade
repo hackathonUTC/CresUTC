@@ -1,6 +1,6 @@
 div.container-fluid
 	div.row
-		div.col-md-3
+		div.col-lg-3.col-sm-5
 			div.row.well
 				table.table.table-striped
 					tr
@@ -30,10 +30,10 @@ div.container-fluid
 				a.btn.btn-success.btn-block.btnSpacer.btn-lg(href='#/adminpanel/') Panneau d'administration
 			div.row
 				a.btn.btn-default.btn-block.btnSpacer.btn-lg(ng-click="logout()" href="/logout") Deconnexion
-		div.col-md-1
+		div.col-lg-1.col-sm-1
 			div.row
 				div.btn-group.btn-group-vertical
 					label.btn.btn-default.btn-lg(ng-repeat='cat in categorie' ng-model="$parent.currentCategorie" btn-radio="{{$index}}" ng-click="switchOnglet($index)") {{cat.name}}
-		div.col-md-8
-			div.col-md-2(ng-repeat="p in products")
-				button.btn.btn-default.btn-lg.btn-block(style='margin-bottom: 10px; margin-top: 10px' ng-click="ajouterProduit(p)") {{p.name}}
+		div.col-sm-7
+			div.col-lg-2.col-md-4(ng-repeat="p in products")
+				button.btn.btn-default.btn-block(style='margin-bottom: 10px; margin-top: 10px' ng-click="ajouterProduit(p)") {{p.name}}
