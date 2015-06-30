@@ -20,6 +20,7 @@
     "jsonwebtoken": "^5.0.1",
     "morgan": "^1.5.3",
     "mysql": "^2.7.0",
+    "sequelize": "^3.2.0",
     "spin": "0.0.1"
   },
   "devDependencies": {

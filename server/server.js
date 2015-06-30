@@ -6,6 +6,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser')
 var caisse = require('./caisse.js');
 var path = require('path');
+var orm = require('./orm.js');
 var CASAuthentication = require('cas-authentication');
 
 app.use( session({
@@ -20,6 +21,8 @@ var cas = new CASAuthentication({
     cas_version: '2.0',
     session_name    : 'cas_user'
 });
+
+orm.initModel();
 
 app.use(morgan('dev'));
 app.use(cookieParser());
