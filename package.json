@@ -28,6 +28,7 @@
     "gulp-concat": "^2.5.2",
     "gulp-jade": "^1.0.1",
     "gulp-plumber": "^1.0.1",
+    "gulp-rm": "^1.0.0",
     "gulp-uglify": "^1.2.0"
   }
 }

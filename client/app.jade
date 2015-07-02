@@ -8,7 +8,11 @@ html(ng-app="app")
 		script(src='//code.angularjs.org/1.4.0/angular-cookies.js')
 		script(src='//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js')
 		script(src='/js/angular-jwt.js')
-		script(src='/js/caisse.js')
+		if release
+			script(src='/js/caisse.js')
+		else
+			each jsFile in jsFiles
+				script(src=jsFile)
 		link(rel="stylesheet" href='/css/bootstrap.css')
 		link(rel="stylesheet" href='/css/bootstrap-theme.css')
 		link(rel="stylesheet" href='/css/caisse.css')

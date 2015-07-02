@@ -3,12 +3,27 @@ var concat = require('gulp-concat');
 var jade = require('gulp-jade');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
+var rm = require('gulp-rm');
+
+var allJs = ['./client/js/app.js',
+	'./client/js/caisse.js',
+	'./client/js/admin_panel_gerer_caisse.js',
+	'./client/js/admin_panel_gerer_categorie.js',
+	'./client/js/admin_journaldesventes.js',
+	'./client/js/admin_gereruser.js'
+];
 
 gulp.task('scripts', function(){
-	return gulp.src(['./client/js/app.js', './client/js/caisse.js', './client/js/admin_panel_gerer_caisse.js', './client/js/admin_panel_gerer_categorie.js', './client/js/admin_journaldesventes.js', './client/js/admin_gereruser.js'])
+	return gulp.src(allJs)
+		.pipe(plumber())
+		.pipe(gulp.dest('./public/js'));
+});
+
+gulp.task('scripts-release', function(){
+	return gulp.src(allJs)
 		.pipe(plumber())
 		.pipe(concat('caisse.js'))
-		//.pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest('./public/js'));
 });
 
@@ -44,9 +59,24 @@ gulp.task('angular', function() {
 })
 
 gulp.task('jade', function(){
+
+	var devJsFile = [];
+
+	allJs.forEach(function (jsFile) {
+		var extractedName = jsFile.slice(12);
+		devJsFile.push('/js/' + extractedName);
+	})
+
 	gulp.src('./client/*.jade')
 	.pipe(plumber())
-	.pipe(jade({locals: {}}))
+	.pipe(jade({locals: {jsFiles : devJsFile}}))
+	.pipe(gulp.dest('./public'));
+})
+
+gulp.task('jade-release', function(){
+	gulp.src('./client/*.jade')
+	.pipe(plumber())
+	.pipe(jade({locals: {release: true}}))
 	.pipe(gulp.dest('./public'));
 })
 
@@ -56,4 +86,10 @@ gulp.task('watch', function() {
 	gulp.watch('./client/*.jade', ['jade']);
 })
 
-gulp.task('default', ['jade', 'scripts', 'css', 'bootstrap', 'angular', 'watch']);
+gulp.task('clear', function() {
+	gulp.src('./public/**/*')
+	.pipe(rm({read: false}));
+})
+
+gulp.task('default', ['clear', 'jade', 'scripts', 'css', 'bootstrap', 'angular', 'watch']);
+gulp.task('release', ['clear', 'jade-release', 'scripts-release', 'css', 'bootstrap', 'angular'])
