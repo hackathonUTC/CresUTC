@@ -8,6 +8,7 @@ var caisse = require('./caisse.js');
 var path = require('path');
 var orm = require('./orm.js');
 var user = require('./api/user.js');
+var categorie = require('./api/categorie.js')
 var CASAuthentication = require('cas-authentication');
 
 app.use( session({
@@ -40,11 +41,12 @@ app.use(cookieParser());
 })*/
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-/*app.use(express.static(path.resolve(__dirname, './../public')));
+app.use(express.static(path.resolve(__dirname, './../public')));
 app.get('/logout/', cas.logout);
-app.get('/', cas.bounce, caisse.checkRights, caisse.loadCaisse);*/
+app.get('/', cas.bounce, caisse.checkRights, caisse.loadCaisse);
 
 app.use('/user', user);
+app.use('/categorie', categorie);
 app.use('*', function(req, res){
 	res.status(404).send("Not found :(");
 });

@@ -3,14 +3,15 @@ var concat = require('gulp-concat');
 var jade = require('gulp-jade');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
-var rm = require('gulp-rm');
+var del = require('del');
 
 var allJs = ['./client/js/app.js',
 	'./client/js/caisse.js',
 	'./client/js/admin_panel_gerer_caisse.js',
 	'./client/js/admin_panel_gerer_categorie.js',
 	'./client/js/admin_journaldesventes.js',
-	'./client/js/admin_gereruser.js'
+	'./client/js/admin_gereruser.js',
+	'./client/js/res_categorie.js'
 ];
 
 gulp.task('scripts', function(){
@@ -56,6 +57,8 @@ gulp.task('angular', function() {
 	.pipe(gulp.dest('./public/js'));
 	gulp.src('./node_modules/angular-jwt/dist/angular-jwt.js')
 	.pipe(gulp.dest('./public/js'));
+	gulp.src('./node_modules/angular-resource/angular-resource.js')
+	.pipe(gulp.dest('./public/js'));
 })
 
 gulp.task('jade', function(){
@@ -87,8 +90,7 @@ gulp.task('watch', function() {
 })
 
 gulp.task('clear', function() {
-	gulp.src('./public/**/*')
-	.pipe(rm({read: false}));
+	del.sync(['./public']);
 })
 
 gulp.task('default', ['clear', 'jade', 'scripts', 'css', 'bootstrap', 'angular', 'watch']);

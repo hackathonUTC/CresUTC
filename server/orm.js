@@ -6,6 +6,9 @@ var sequelize = new Sequelize('cresutc_orm', 'root', 'mxd351Rt', {
 		max: 5,
 		min: 0,
 		timeout: 10000
+	},
+	define: {
+		timestamps: false
 	}
 });
 
@@ -26,11 +29,13 @@ exports.initModel = function() {
 	exports.Categorie = sequelize.define('categorie', {
 		id: {
 			type: Sequelize.INTEGER.UNSIGNED,
-			primaryKey: true
+			primaryKey: true,
+			autoIncrement: true,
 		},
 		name: {
 			type: Sequelize.STRING(45),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		}
 	});
 
@@ -99,7 +104,5 @@ exports.initModel = function() {
 
 	exports.Vente.hasMany(produitVendu);
 
-	sequelize.sync({force: true}).then(function() {
-		exports.User.create({cas_login: "awacheux"})
-	});
+	sequelize.sync({force: false});
 }

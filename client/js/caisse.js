@@ -1,4 +1,4 @@
-app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', '$location', function($scope, $http, $modal, jwtHelper, $cookies, $location) {
+app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', '$location', 'Categorie', function($scope, $http, $modal, jwtHelper, $cookies, $location, Categorie) {
 	$scope.categorie = [];
 
 	$scope.ticket = [];
@@ -81,17 +81,8 @@ app.controller('caisse', ['$scope', '$http', '$modal', 'jwtHelper', '$cookies', 
 	}
 
 	function loadCaisse() {
-		$http.get('/caisse/load')
-		.success(function(data, status, headers, config) {
-			$scope.categorie = data;
-			if($scope.categorie.length > 0)
-			{
-				$scope.products = $scope.categorie[0].produits;
-				$scope.currentCategorie = 0;
-			}
-		})
-		.error(function(data, status, headers, config) {
-
+		Categorie.query(function(categories){
+			$scope.categorie = categories;
 		});
 	}
 

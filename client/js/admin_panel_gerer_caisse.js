@@ -1,4 +1,4 @@
-app.controller('admin_panel_gerer_caisse', ['$scope', '$http', '$modal', function($scope, $http, $modal) {
+app.controller('admin_panel_gerer_caisse', ['$scope', 'Categorie', '$modal', function($scope, Categorie, $modal) {
 	$scope.categorie = []
 
 	$scope.ajouterCategorie = function() {
@@ -8,24 +8,18 @@ app.controller('admin_panel_gerer_caisse', ['$scope', '$http', '$modal', functio
 		});
 
 		dialogAjouterCat.result.then(function(catName) {
-			$http.post('caisse/ajouterCategorie', {catName: catName})
-			.success(function(data, status, headers, config) {
-				loadCategorie();
+			var categorie = new Categorie();
+			categorie.name = catName;
+			categorie.$save(function(newCat) {
+				$scope.categorie.push(newCat);
 			})
-			.error(function(data, status, headers, config) {
-
-			});
-		})
+		});
 	}
 
 	function loadCategorie() {
-		$http.get('caisse/categorie')
-		.success(function(data, status, headers, config) {
-			$scope.categorie = data;
+		Categorie.query(function(categories){
+			$scope.categorie = categories;
 		})
-		.error(function(data, status, headers, config) {
-
-		});
 	}
 
 	loadCategorie();

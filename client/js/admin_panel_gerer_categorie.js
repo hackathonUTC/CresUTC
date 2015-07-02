@@ -1,4 +1,4 @@
-app.controller('adminpanel_gerer_categorie', ['$scope', '$http', '$routeParams', '$modal', function($scope, $http, $routeParams, $modal) {
+app.controller('adminpanel_gerer_categorie', ['$scope', 'Categorie', '$routeParams', '$modal', function($scope, Categorie, $routeParams, $modal) {
 	$scope.produits = [
 		{
 			id: 1,
@@ -13,16 +13,9 @@ app.controller('adminpanel_gerer_categorie', ['$scope', '$http', '$routeParams',
 	var catId = $routeParams.catId;
 
 	function loadCategorie() {
-		$http.get('/caisse/categorieDetail', {params: {
-			id: catId
-		}})
-		.success(function(data, status, headers, config) {
-			$scope.produits = data.produits;
-			$scope.cat_name = data.cat_name;
+		Categorie.get({id: catId}, function(categorie){
+			$scope.cat_name = categorie.name;
 		})
-		.error(function(data, status, headers, config) {
-
-		});
 	}
 
 	loadCategorie();
