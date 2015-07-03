@@ -1,13 +1,24 @@
 var express = require('express');
 var router = express.Router();
 var orm = require('../orm.js');
+var util = require('util');
+var produit = require('./produit.js');
 
 //Section routage
 
 router.param('id', function(req, res, next, id){
   if(/^[0-9]+$/.test(id)){
-    req.id = id;
-    next();
+    orm.Categorie.findById(id).then(function(categorie){
+      if(categorie == null){
+        res.status(404).json({error: 'Categorie not found'});
+      }
+      else {
+        req.categorie = categorie;
+        next();
+      }
+    }).catch(function(error) {
+      res.status(500).json({error: 'Database error'});
+    })
   }
   else {
     res.status(400).json({error : 'id must be a number'});
@@ -18,6 +29,7 @@ router.get('/', allCategorie);
 router.get('/:id', getCategorie)
 router.post('/', createCategorie);
 router.put('/:id', updateCategorie);
+router.use('/:id/produits', produit)
 
 module.exports  = router;
 
@@ -30,14 +42,7 @@ function allCategorie(req, res) {
 }
 
 function getCategorie(req, res) {
-  orm.Categorie.findById(req.id).then(function(categorie){
-    if(categorie == null){
-      res.status(404).json({status: 'Categorie not found'});
-    }
-    else {
-      res.status(200).json(categorie);
-    }
-  })
+  res.status(200).json(req.categorie.toJSON());
 }
 
 function createCategorie(req, res) {
@@ -49,11 +54,10 @@ function createCategorie(req, res) {
 }
 
 function updateCategorie(req, res) {
-  orm.Categorie.update({name: req.body.name}, {where: {
-    id: req.params.id
-  }}).then(function() {
-    res.sendStatus(200);
+  req.categorie.set('name', req.body.name);
+  req.categorie.save().then(function() {
+    res.status(200).json({error: 'ok'});
   }).catch(function(error){
-    res.status(500).json({error: error});
-  });
+    res.status(500).json({error: 'Databse error'});
+  })
 }

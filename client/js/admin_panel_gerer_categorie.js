@@ -11,16 +11,21 @@ app.controller('adminpanel_gerer_categorie', ['$scope', 'Categorie', '$routePara
 	$scope.cat_name = '';
 
 	var catId = $routeParams.catId;
+	var produitsRes = Categorie.getProduitsRessource(catId);
 
 	function loadCategorie() {
 		Categorie.get({id: catId}, function(categorie){
 			$scope.cat_name = categorie.name;
+			produitsRes.query(function(produits){
+				$scope.produits = produits;
+			})
 		})
 	}
 
 	loadCategorie();
 
 	$scope.editerArticle = function(p) {
+		var produitIndex = $scope.produits.indexOf(p);
 		var dialog = $modal.open({
 			templateUrl: 'dialog_edit_article.html',
 			controller: 'dialog_edit_article',
@@ -32,22 +37,19 @@ app.controller('adminpanel_gerer_categorie', ['$scope', 'Categorie', '$routePara
 		})
 
 		dialog.result.then(function(p) {
-			$http.post('/caisse/pushArticle', p)
-			.success(function(data, status, headers, config) {
-			})
-			.error(function(data, status, headers, config) {
-				loadCategorie();
+			p.$update(function(produitMisAJour){
+				$scope.produits[produitIndex] = produitMisAJour;
 			});
 		});
 	}
 
 	$scope.ajouterArticle = function() {
-		var p = {
-			name: '',
-			prix: 0,
-			type: 'objet',
-			categorie: catId,
-		}
+
+		var p = new produitsRes();
+		p.name = '';
+		p.prix = 0;
+		p.type = 'produit';
+		p.icon = null;
 
 		var dialog = $modal.open({
 			templateUrl: 'dialog_edit_article.html',
@@ -60,24 +62,17 @@ app.controller('adminpanel_gerer_categorie', ['$scope', 'Categorie', '$routePara
 		})
 
 		dialog.result.then(function(p) {
-			$http.post('/caisse/newArticle', p)
-			.success(function(data, status, headers, config) {
-				loadCategorie();
-			})
-			.error(function(data, status, headers, config) {
-				loadCategorie();
+			p.$save(function(produitTuple){
+				$scope.produits.push(produitTuple);
 			});
 		})
 	}
 
 	$scope.supprimerProduit = function(p) {
-		$http.post('/caisse/deleteArticle', {id: p.id})
-		.success(function(data, status, headers, config) {
-			loadCategorie();
+		var produitIndex = $scope.produits.indexOf(p);
+		p.$delete(function(){
+			$scope.produits.splice(produitIndex, 1);
 		})
-		.error(function(data, status, headers, config) {
-			loadCategorie();
-		});
 	};
 }]);
 

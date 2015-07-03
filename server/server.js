@@ -8,7 +8,7 @@ var caisse = require('./caisse.js');
 var path = require('path');
 var orm = require('./orm.js');
 var user = require('./api/user.js');
-var categorie = require('./api/categorie.js')
+var categorie = require('./api/categorie.js');
 var CASAuthentication = require('cas-authentication');
 
 app.use( session({

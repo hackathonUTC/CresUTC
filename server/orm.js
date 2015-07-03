@@ -8,7 +8,8 @@ var sequelize = new Sequelize('cresutc_orm', 'root', 'mxd351Rt', {
 		timeout: 10000
 	},
 	define: {
-		timestamps: false
+		timestamps: false,
+		allowNull: false
 	}
 });
 
@@ -22,7 +23,6 @@ exports.initModel = function() {
 		rights: {
 			type: Sequelize.ENUM('client', 'vendeur', 'admin'),
 			defaultValue: 'client',
-			allowNull: false
 		}
 	});
 
@@ -42,7 +42,8 @@ exports.initModel = function() {
 	exports.Produit = sequelize.define('produit', {
 		id: {
 			type: Sequelize.INTEGER.UNSIGNED,
-			primaryKey: true
+			primaryKey: true,
+			autoIncrement: true
 		},
 		name: {
 			type: Sequelize.STRING(45),
@@ -57,6 +58,11 @@ exports.initModel = function() {
 		icon: {
 			type: Sequelize.STRING(256),
 			allowNull: true,
+		},
+		type: {
+			type: Sequelize.ENUM('produit', 'service'),
+			allowNull: false,
+			defaultValue: 'produit'
 		}
 	});
 
